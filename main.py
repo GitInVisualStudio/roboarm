@@ -35,7 +35,7 @@ def move_to_position(positon):
     """
     x, y, z = position
 
-    #first calculate the need rotation on the x-y-axis
+    #first calculate the needed rotation on the x-y-axis
     gamma.move(math.atan(y, x) * 180 / math.pi)
 
     #calculate the distance to the point
@@ -43,7 +43,7 @@ def move_to_position(positon):
 
     #calculate the raltive angle for alpha to get the absolut angle of beta
     angle = math.acos(length / 2) * 180 / math.pi
-    beta.move(angle / 2)
+    beta.move(180 - angle * 2)
 
     #calculate the absolute angle of alpha
     length = math.sqrt(x**2 + y**2)
