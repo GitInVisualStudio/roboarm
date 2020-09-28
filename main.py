@@ -59,8 +59,8 @@ def move_to_position(*position):
     #length_2 = math.sqrt(x*len)
     angle += math.asin(z) * 180 / math.pi
     alpha.move(180 - angle)
-    if 180 - angle < 90:
-        beta_angle -= angle
+    if angle > 90:
+        beta_angle += angle
     beta.move(90 + beta_anle)
 
 
