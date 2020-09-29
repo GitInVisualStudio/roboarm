@@ -57,24 +57,18 @@ def move_to_position(*position):
         length = 2
     
     angle = math.acos(length / 2) * 180 / math.pi
-    beta_angle = (90 - angle)
-
-    #calculate the absolute angle of alpha
-    #length_2 = math.sqrt(x*len)
+    beta_angle = 180 - angle * 2
+    
     angle += math.asin(z) * 180 / math.pi
     alpha.move(180 - angle)
-    print(angle)
-    if angle < 90:
-        beta_angle += angle
-    beta.move(90 + beta_angle)
+
+    beta.move(beta_angle)
 
 
 #init()
 #time.sleep(DELAY)
-grab.move(90)
-time.sleep(DELAY)
-grab.move(0)
-"""x, y, z = 0, 0, 0
+
+x, y, z = 0, 0, 0
 while True:
     key = input()
     size = 0.1
@@ -90,7 +84,7 @@ while True:
         y += size
     if key is "d":
         y -= size
-    move_to_position(x, y, z)"""
+    move_to_position(x, y, z)
 
 time.sleep(DELAY)
 
