@@ -47,7 +47,8 @@ void loop() {
   //Send packet
   sent(packet);
 }
-
+  
+  //class for sending the data
 void sent(char[] data) {
   UDP.beginPacket(UDP.remoteIP(),UDP.remotePort());
   UDP.write(data);
