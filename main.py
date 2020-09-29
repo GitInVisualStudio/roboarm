@@ -37,6 +37,10 @@ def move_to_position(*position):
     x, y, z = position
 
     length = math.sqrt(x**2 + y**2 + z**2)
+
+    if length is 0:
+        return
+
     x /= length
     y /= length
     z /= length
@@ -59,14 +63,18 @@ def move_to_position(*position):
     #length_2 = math.sqrt(x*len)
     angle += math.asin(z) * 180 / math.pi
     alpha.move(180 - angle)
-    if angle > 90:
+    print(angle)
+    if angle < 90:
         beta_angle += angle
-    beta.move(90 + beta_anle)
+    beta.move(90 + beta_angle)
 
 
 #init()
 #time.sleep(DELAY)
-x, y, z = 0, 0, 0
+grab.move(90)
+time.sleep(DELAY)
+grab.move(0)
+"""x, y, z = 0, 0, 0
 while True:
     key = input()
     size = 0.1
@@ -82,7 +90,7 @@ while True:
         y += size
     if key is "d":
         y -= size
-    move_to_position(x, y, z)
+    move_to_position(x, y, z)"""
 
 time.sleep(DELAY)
 
