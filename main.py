@@ -25,34 +25,31 @@ def close():
 
 def get_angles(*position):
     """
-    moves the arm to the position
+    returns the angles needed for the arm to move to the position
     positon is a 3d vector x, y, z
     """
 
     x, y, z = position
 
-    length = math.sqrt(x**2 + y**2 + z**2)
+    length = math.sqrt(x**2 + y**2 + z**2) #distance to the position
 
     if length is 0:
         return
-
+    
+    #normalization of the position
     x /= length
     y /= length
     z /= length
     
-    if length > 2:
+    if length > 2: #limits the length the maximal length of the arm, one joint equals 1
         length = 2
 
-    if y < 0:
+    if y < 0: #the arm cant turn back
         y = 0
     
-    angle = math.acos(length / 2) * 180 / math.pi
-    angle_beta = 180 - angle * 2
-    angle_alpha = math.asin(z) * 180 / math.pi
-    #alpha.move(180 - angle - angle_alpha)
-    """if angle + angle_alpha > 70:
-        beta_angle += (angle + angle_alpha) - 70"""
-    #beta.move(beta_angle)
+    angle = math.acos(length / 2) * 180 / math.pi #rotation of the arms
+    angle_beta = 180 - angle * 2 #beta is the angle between the arms
+    angle_alpha = math.asin(z) * 180 / math.pi #absolute rotation
     return angle + angle_alpha, angle_beta, math.atan2(y, x) * 180 / math.pi
 
 pygame.init()
@@ -61,7 +58,7 @@ WIDTH, HEIGHT = 720, 480
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
-FPS = 30
+FPS = 10
 
 running = True
 
@@ -92,7 +89,7 @@ while running:
 
             alpha.move(180 - a) #alpha is placed in the wrong way, so we need to change the direction
             if a > 70:
-                b += a - 70 #because beta influences alpha in the real world we need to consider this
+                b += a - 70 #because beta influences alpha in the real world we need to consider this otherwise it would block alpha, at least i think so
             beta.move(b)
             gamma.move(g)
 
