@@ -19,11 +19,11 @@ void setup() {
 
   //Connecting...
   Serial.print("Connect: ");
-  Serial.print(WiFi_SSID);
-  Serial.println("Connecting..");
+  Serial.println(WiFi_SSID);
+  Serial.print("Connecting..");
 
   while(WiFi.status != WL_CONNECTED) {
-    delay(100);
+    delay(300);
     Serial.print(".");
   }
 
@@ -49,7 +49,7 @@ void loop() {
 }
   
   //class for sending the data
-void sent(char[] data) {
+void sent(char data[]) {
   UDP.beginPacket(UDP.remoteIP(),UDP.remotePort());
   UDP.write(data);
   UDP.endPacket();
