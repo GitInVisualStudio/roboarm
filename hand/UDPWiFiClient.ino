@@ -15,12 +15,12 @@ char recieve[255];
 void setup() {
   Serial.begin(115200);
 
-  WiFi.begin(WiFiSSID, WiFiPass);
+  WiFi.begin(WiFi_SSID, WiFi_Pass);
 
   //Connecting...
   Serial.print("Connect: ");
-  Serial.print(WiFiSSID);
-  Serial.println("Connecting..")
+  Serial.print(WiFi_SSID);
+  Serial.println("Connecting..");
 
   while(WiFi.status != WL_CONNECTED) {
     delay(100);
