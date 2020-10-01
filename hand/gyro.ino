@@ -20,8 +20,8 @@ void loop() {
   Wire.beginTransmission(0x68);
   Wire.write(0x3B);  
   Wire.endTransmission(true);                              
-  Wire.requestFrom(MPU_addr,14,true);
-  
+  Wire.requestFrom(0x68, 14, true);
+  while(Wire.available() < 14);     
   acc_x = Wire.read()<<8|Wire.read();  
   acc_x = Wire.read()<<8|Wire.read();  
   acc_x = Wire.read()<<8|Wire.read();  
@@ -38,6 +38,6 @@ void loop() {
   
   Serial.println(x);
   
-  /*while(micros() - loop_timer < 4000);                    
-  loop_timer = micros();     */
+  while(micros() - loop_timer < 4000);                    
+  loop_timer = micros();     
 }
