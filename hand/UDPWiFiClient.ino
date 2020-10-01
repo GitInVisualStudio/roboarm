@@ -22,7 +22,7 @@ void setup() {
   Serial.println(WiFi_SSID);
   Serial.print("Connecting..");
 
-  while(WiFi.status != WL_CONNECTED) {
+  while(WiFi.status() != WL_CONNECTED) {
     delay(300);
     Serial.print(".");
   }
