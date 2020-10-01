@@ -32,15 +32,15 @@ void loop() {
   x = x * beta + (acc_x / 255.0f * (1 - beta));
   y = y * beta + (acc_y / 255.0f * (1 - beta));
   z = z * beta + (acc_z / 255.0f * (1 - beta));
-  Serial.println();
+  Serial.println(x);
   while(micros() - loop_timer < 4000);                    
   loop_timer = micros();     
 }
 
 int read_data(){
-  int positiv = Wire.read() << 8;
+  int positiv = Wire.read() * 256;
   int negativ = Wire.read();
-  return positiv - negativ;
+  return positiv + negativ;
 }
   
 
