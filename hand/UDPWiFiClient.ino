@@ -30,20 +30,23 @@ void setup() {
   //Connected to WiFi_SSID
   Serial.println();
   Serial.print("Connected!The IP: ");
-  Serial.print(WiFi.localIP());
+  Serial.println(WiFi.localIP());
 
   //UDP listining
   UDP.begin(UDP_PORT);
-  Serial.print("Listening on UDP Port: ");
-  Serial.print(UDP_PORT);
-}
-
-void loop() {
-  //example data 
+  Serial.print("Sending on UDP Port: ");
+  Serial.println(UDP_PORT);
+  
+    //example data 
   packet[0] = '1';
   packet[1] = '2';
   packet[2] = '3';
+}
+
+void loop() {
   
+  delay(1000);
+  Serial.println("Sending")
   //Send packet
   sent(packet);
 }
