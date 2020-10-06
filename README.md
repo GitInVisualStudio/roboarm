@@ -1,4 +1,4 @@
-# roboarm
+# Roboarm
 
 A small Project about controlling a robotarm with a glove.
 
