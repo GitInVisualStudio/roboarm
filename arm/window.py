@@ -8,14 +8,15 @@ class Window:
         self.width = width
         self.height = height
         self.events = []
+        self.keys = []
         self.add_event((pygame.QUIT, exit))
-        self.camera = np.array([-10, 0, 0])
-        self.x = 0
-        self.y = 0
-        self.z = 10
 
     def open(self):
         self.screen = pygame.display.set_mode((self.width, self.height))
+    
+    def add_key_event(self, *arg):
+        for term, action in arg:
+            self.keys.append((term, action))    
 
     def add_event(self, *arg):
         for term, action in arg:
@@ -23,32 +24,24 @@ class Window:
 
     def __check_events(self):
         for event in pygame.event.get():
+            for term, action in self.events:
+                if event.type == term:
+                    action()
             if event.type is not pygame.KEYDOWN:
                 break
-            if event.key == pygame.K_w:
-                self.x += 1
-            if event.key == pygame.K_s:
-                self.x -= 1
-            if event.key == pygame.K_a:
-                self.y += 1
-            if event.key == pygame.K_d:
-                self.y -= 1
-            for term, action in self.events:
+            for term, action in self.keys:
                 if event.key == term:
                     action()
-    
-    def get_point(self, *position):
-        position = np.array(position)
-        length = math.sqrt((position * position).sum())
-        if length == 0:
-            return 0, 0
-        #NOTE: the fov is 90deg to simplify things, thats why we dont need a clip matrix
-        return ((position - self.camera) * length / position[2] + self.camera)[:2]
 
     def update(self, angles):
         self.__check_events()
         #TODO: render the arm
-        x, y = self.get_point(self.x, self.y, self.z)
-        self.screen.fill((0, 0, 0))
-        pygame.draw.rect(self.screen, (0, 255, 0), (x, y, 2, 2))
+
+        alpha, beta, gamma, delta = angles
+        #translation
+        _x, _y = 100, 100
+        length = 30
+        x, y = _x + math.cos(alpha) * length, _y + math.sin(alpha) * length
+        pygame.draw.line(self.screen, (0, 255, 0), (_x, _y), (x, y))
+
         pygame.display.update()

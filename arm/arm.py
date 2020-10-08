@@ -2,18 +2,17 @@ from servo import Servo
 import RPi.GPIO as GPIO
 
 #init the arm
-alpha, beta, gamma, grab  = 0, 0, 0, 0
-servos = [Servo(19), Servo(13), Servo(6), Servo(26)]
+#alpha = 13, beta = 6, gamma = 22, delta = 5
+servos = [Servo(13), Servo(6), Servo(22), Servo(5)]
 
 def close():
     for servo in servos:
         servo.close()
     GPIO.cleanup()
 
-def move_arm(angles):
-    alpha, beta, gamma, grab = angles
-    for servo, angle in zip(angles, servo):
+def move_arm(*angles):
+    for angle, servo in zip(angles, servos):
         servo.move(angle)
 
 def get_angles():
-    return alpha, beta, gamma, grab
+    return [servo.angle for servo in servos]

@@ -1,7 +1,11 @@
 from window import Window
-import math
-import pygame
 import threading
+import pygame
+import time
+import math
+import arm
+
+x, y, z = 0, 0, 0
 
 def get_angles(*position):
     """
@@ -28,11 +32,11 @@ def get_angles(*position):
     if y < 0: #the arm cant turn back
         y = 0
     
-    angle = math.acos(length / 2) * 180 / math.pi #rotation of the arms
-    angle_beta = 180 - angle * 2 #beta is the angle between the arms
-    angle_alpha = angle + math.asin(z) * 180 / math.pi #absolute rotation
+    angle = math.acos(length / 2) #rotation of the arms
+    angle_beta = math.pi - angle #beta is the angle between the arms
+    angle_alpha = angle + math.asin(z) #absolute rotation
 
-    return angle_alpha, angle_beta, math.atan2(y, x) * 180 / math.pi
+    return angle_alpha, angle_beta, math.atan2(y, x)
 
 def right():
     y -= 1
@@ -60,18 +64,16 @@ def run_window():
     window.open()
     
     #adding events to controll the arm via keyboard
-    #window.add_event((pygame.K_w, forward), (pygame.K_s, back), (pygame.K_a, left), (pygame.K_d, right), (pygame.K_SPACE, up), (pygame.K_u, down))
+    #window.add_key_event((pygame.K_w, forward), (pygame.K_s, back), (pygame.K_a, left), (pygame.K_d, right), (pygame.K_SPACE, up), (pygame.K_u, down))
     clock = pygame.time.Clock()
 
     while running:
-        angles = get_angles(x, y, z)
-        window.update(angles)
+        window.update(arm.get_angles())
         clock.tick(FPS)
-
-x, y, z = 0, 0, 0
 
 running = True
 thread = threading.Thread(target=run_window)
 thread.start()
 
 #TODO: get the information from the esp and process it
+arm.close()

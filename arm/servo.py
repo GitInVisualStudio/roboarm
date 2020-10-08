@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import math
 
 class Servo:
 
@@ -10,8 +11,11 @@ class Servo:
         self.servo = GPIO.PWM(pin, 50)
         self.servo.start(1)
         self.default_delay = default_delay
+        self.angle = 0
 
     def move(self, angle):
+        angle = math.degrees(angle)
+        self.angle = angle
         angle = angle / 18 + 2
         self.servo.ChangeDutyCycle(angle)
         time.sleep(self.default_delay / 1000)
