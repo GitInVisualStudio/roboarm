@@ -4,7 +4,7 @@
 //Wifi data
 #define WiFi_SSID "Your SSiD"
 #define WiFi_Pass "Your Pass"
-#define UDP_PORT 4269
+#define UDP_PORT 44444
 
 //UDP
 WiFiUDP UDP;
@@ -53,7 +53,7 @@ void loop() {
   
   //class for sending the data
 void sent(char data[]) {
-  UDP.beginPacket(UDP.remoteIP(),UDP.remotePort());
+  UDP.beginPacket("192.168.178.86",44444);
   UDP.write(data);
   UDP.endPacket();
 }
