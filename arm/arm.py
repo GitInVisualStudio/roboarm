@@ -1,3 +1,4 @@
+import RPi.GPIO as GPIO
 from servo import Servo
 import numpy as np
 import math

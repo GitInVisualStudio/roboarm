@@ -39,7 +39,6 @@ def run_window():
 
     while running:
         window.update(arm.get_current_angles())
-        #just testing to see if gradient descent works...
         arm.move_to_position()
         clock.tick(FPS)
 
@@ -48,4 +47,4 @@ thread = threading.Thread(target=run_window)
 thread.start()
 
 #TODO: get the information from the esp and process it
-#arm.close()
+arm.close()
