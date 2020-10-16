@@ -1,3 +1,4 @@
+import arm
 import math
 import pygame
 import numpy as np
@@ -35,13 +36,28 @@ class Window:
 
     def update(self, angles):
         self.__check_events()
+        #clear the current screen
+        self.screen.fill((0, 0, 0))
+
         #TODO: render the arm
 
-        alpha, beta, gamma, delta = angles
+        alpha, beta, gamma = angles
         #translation
         _x, _y = 100, 100
         length = 30
-        x, y = _x + math.cos(alpha) * length, _y + math.sin(alpha) * length
-        pygame.draw.line(self.screen, (0, 255, 0), (_x, _y), (x, y))
+        #angles are negative because the top starts at 0
+        x, y = _x + math.cos(-alpha) * length, _y + math.sin(-alpha) * length
+        pygame.draw.line(self.screen, (255, 0, 0), (_x, _y), (x, y))
+
+        x2, y2 = x + math.cos(-beta) * length, y + math.sin(-beta) * length
+        pygame.draw.line(self.screen, (0, 255, 0), (x, y), (x2, y2))
+
+        x3, y3 = x2 + math.cos(-gamma) * length, y2 + math.sin(-gamma) * length
+        pygame.draw.line(self.screen, (0, 0, 255), (x2, y2), (x3, y3))
+        
+        #TODO: render the target position
+        x = _x + math.sqrt(arm.x**2 + arm.y**2) * length
+        y = _y - arm.z * length #opposite direction
+        pygame.draw.rect(self.screen, (0, 255, 255), (x, y, 5, 5))
 
         pygame.display.update()
