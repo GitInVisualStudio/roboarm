@@ -1,24 +1,23 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 import math
 
 class Servo:
 
-    def __init__(self, pin, default_delay=0):
+    def __init__(self, pin):
         self.pin = pin
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, GPIO.OUT)
-        self.servo = GPIO.PWM(pin, 50)
-        self.servo.start(1)
-        self.default_delay = default_delay
-        self.angle = 0
+        #GPIO.setmode(GPIO.BCM)
+        #GPIO.setup(pin, GPIO.OUT)
+        #self.servo = GPIO.PWM(pin, 50)
+        #self.servo.start(1)
+        self.angle = 0.0
 
     def move(self, angle):
-        angle = math.degrees(angle)
         self.angle = angle
+        angle = math.degrees(angle)
         angle = angle / 18 + 2
-        self.servo.ChangeDutyCycle(angle)
-        time.sleep(self.default_delay / 1000)
+        #self.servo.ChangeDutyCycle(angle)
 
     def close(self):
-        self.servo.stop()
+        #self.servo.stop()
+        print("close!")
