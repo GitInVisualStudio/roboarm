@@ -1,4 +1,5 @@
 from window import Window
+from servo import Servo
 import threading
 import pygame
 import time
@@ -47,4 +48,4 @@ thread = threading.Thread(target=run_window)
 thread.start()
 
 #TODO: get the information from the esp and process it
-arm.close()
+

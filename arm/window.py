@@ -41,12 +41,13 @@ class Window:
 
         #TODO: render the arm
 
-        alpha, beta, gamma = angles
+        alpha, beta, gamma, delta = angles
         #translation
-        _x, _y = 100, 100
-        length = 30
+        _x, _y = 200, 200
+        length = 50
         #angles are negative because the top starts at 0
         x, y = _x + math.cos(-alpha) * length, _y + math.sin(-alpha) * length
+        
         pygame.draw.line(self.screen, (255, 0, 0), (_x, _y), (x, y))
 
         x2, y2 = x + math.cos(-beta) * length, y + math.sin(-beta) * length
