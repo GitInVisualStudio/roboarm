@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import random
 import math
 
 class Servo:
@@ -10,7 +11,7 @@ class Servo:
         GPIO.setup(pin, GPIO.OUT)
         self.servo = GPIO.PWM(pin, 50)
         self.servo.start(0)
-        self.angle = 0.0
+        self.angle = random.random()
 
     def move(self, angle, prev_servo):
         self.angle = angle
