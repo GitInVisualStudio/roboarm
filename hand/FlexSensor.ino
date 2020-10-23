@@ -22,6 +22,7 @@ void loop() {
          digitialWrite(pin, pin & (1 << i)?HIGH:LOW);    //Write the Values 1 or 0 --> Verunden von bzw 1(001) & S1(001) = 1 || 1(001) & S2(010) = 0
       }
       flexValue[pin] = analogRead(flexPin)   //read the Value from the selected pin
+      flexSensor = map(flexSensor,0,1023,0,100); //calculate the procentage
       Serial.print(flexValue[pin] + "\t")    //print the value
    }
    Serial.println();
