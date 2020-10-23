@@ -5,7 +5,6 @@
 #define WiFi_SSID "Your SSiD"
 #define WiFi_Pass "Your Pass"
 #define UDP_PORT 44444
-IPAdress ip(192, 168, 178, 86);
 
 //UDP
 WiFiUDP UDP;
@@ -24,7 +23,7 @@ void setup() {
   pinMode(flexPin, INPUT);  //Setup the analog pin
    for(int i = 0;i<3;i++) {
       pinMode(selectedPin[i], OUTPUT);
-      digitialWrite(selectedPin[i], HIGH)
+      digitalWrite(selectedPin[i], HIGH);
    }
   
   //Connect
@@ -50,34 +49,34 @@ void setup() {
   Serial.print("Sending on UDP Port: ");
   Serial.println(UDP_PORT);
   
-  Serial.println("F1\F2\F3\F4\F5\x\y\z\Te");   //Create a table for the values
-  Serial.println(---\t---\t---\t---\t---\t---\t---\t---\t---\t);
+  Serial.println("F1\F2\F3\F4\F5\x1\y1\z1\Te1");   //Create a table for the values
+  Serial.println("---\t---\t---\t---\t---\t---\t---\t---\t---\t");
 }
 
 void loop() {
   
   for(int pin = 0;pin < 5;pin++) { //all the analog sensors
       for(int i = 0; i < 3;i++) {   //the digital pins to switch between the different sensor via the mulitplexer pcb 74HC4051
-         digitialWrite(selectedPin[i], (pin >> i & 1) ? HIGH : LOW);    //Write the Values 1 or 0 --> Verunden von bzw 1(001) & S1(001) = 1 || 1(001) & S2(010) = 0
+         digitalWrite(selectedPin[i], (pin >> i & 1) ? HIGH : LOW);    //Write the Values 1 or 0 --> Verunden von bzw 1(001) & S1(001) = 1 || 1(001) & S2(010) = 0
       }
-      flexValue[pin] = analogRead(flexPin)   //read the Value from the selected pin
-      flexSensor = map(flexSensor,0,1023,0,100); //calculate the procentage
-      Serial.print(flexValue[pin] + "\t")    //print the value
+      flexValue[pin] = analogRead(flexPin);   //read the Value from the selected pin
+      flexValue[pin] = map(flexValue[pin],0,1023,0,100); //calculate the procentage
+      Serial.print(flexValue[pin] + "\t");    //print the value
   }
-  Serial.print("1" + "\t"); //Testdata for x,y,z
-  Serial.print("2" + "\t");
-  Serial.print("3" + "\t");
+  //Serial.print("1" + "\t"); //Testdata for x,y,z
+  //Serial.print("2" + "\t");
+  //Serial.print("3" + "\t");
   
-  Serial.print("\t" + "Sent")
+  //Serial.print("\t" + "Sent");
   sent("Hello from the ESP"); //Send packet
   
   Serial.println("");
-  Delay(500);
+  delay(500);
 }
   
 //class for sending the data
 void sent(char data[]) {
-  UDP.beginPacket(ip,44444);
+  UDP.beginPacket("192.168.178.86",44444);
   UDP.write(data);
   UDP.endPacket();
 }
