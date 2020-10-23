@@ -1,4 +1,4 @@
-const int flexPin = A0; //The AnalogPin that reads the differences in all in the ohm values 
+const int flexPin = A0; //The AnalogPin that reads the different values 
 const int selectedPin[3] = {D1, D2, D3}; //The pins for the InputState 
 int flexValue[5];    //Container for all the flexValues
 
