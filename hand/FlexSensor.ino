@@ -1,21 +1,29 @@
-const int flexPin = A1; //The AnalogPin that reads the differences in the ohm values 
+const int flexPin = A0; //The AnalogPin that reads the differences in all in the ohm values 
+const int selectedPin[3] = {D1, D2, D3}; //The pins for the InputState 
+int flexValue[5];    //Container for all the flexValues
 
 void setup() {
-
-Serial.begin(9600);
-
-pinMode(flexPin, INPUT);  //Setup the pin as input
-Serial.println("Starting"); 
+   Serial.begin(9600);
+   pinMode(flexPin, INPUT);  //Setup the pin as input
+   for(int i = 0;i<3;i++) {
+      pinMode(selectedPin[i], OUTPUT);
+      digitialWrite(selectedPin[i], HIGH)
+   }
+   
+   Serial.println("Starting"); 
+   Serial.println("F1\F2\F3\F4\F5");   //Create a table for the values
+   Serial.println(---\t---\t---\t---\t---\t);
 }
 
 void loop() {
 
-int flexStatus = 0; //always reset the value to 0 after one round
-Serial.print("Value: ");
-for(int i = 0; i < 10;i++) {  //A for circle to get good value because if you only take one value the likely to jump a little bit. This flattes the data a little bit
-   flexStatus = flexStatus + analogRead(flexPin); //read the analog values from the seonsor the values are between 1023 and 1015 but I don't know how much this values differentiate between each sensor
-}
-flexStatus = flexStatus / 10; //divide the the 10 values to get the avagroge 
-Serial.println(flexStatus);
-delay(1000);   //1 secound brake for the esp
+   for(int pin = 0;pin < 5;pin++) { //all the analog sensors
+      for(int i = 0; i < 3;i++) {   //the digital pins to switch between the different sensor via the mulitplexer pcb 74HC4051
+         digitialWrite(pin, pin & (1 << i)?HIGH:LOW);    //Write the Values 1 or 0 --> Verunden von bzw 1(001) & S1(001) = 1 || 1(001) & S2(010) = 0
+      }
+      flexValue[pin] = analogRead(flexPin)   //read the Value from the selected pin
+      Serial.print(flexValue[pin] + "\t")    //print the value
+   }
+   Serial.println();
+   delay(1000); //1 secound brake for the esp
 }
