@@ -50,8 +50,8 @@ void setup() {
   Serial.print("Sending on UDP Port: ");
   Serial.println(UDP_PORT);
   
-  Serial.println("F1\F2\F3\F4\F5\x\y\z");   //Create a table for the values
-  Serial.println(---\t---\t---\t---\t---\t---\t---\t---\t);
+  Serial.println("F1\F2\F3\F4\F5\x\y\z\Te");   //Create a table for the values
+  Serial.println(---\t---\t---\t---\t---\t---\t---\t---\t---\t);
 }
 
 void loop() {
