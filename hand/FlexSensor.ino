@@ -3,7 +3,7 @@ const int selectedPin[3] = {D1, D2, D3}; //The pins for the InputState (maybe no
 int flexValue[5];    //Container for all the flexValues
 
 void setup() {
-   Serial.begin(9600);
+   Serial.begin(115200);
    pinMode(flexPin, INPUT);  //Setup the pin as input
    for(int i = 0;i<3;i++) {
       pinMode(selectedPin[i], OUTPUT);
