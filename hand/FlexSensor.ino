@@ -19,7 +19,7 @@ void loop() {
 
    for(int pin = 0;pin < 5;pin++) { //all the analog sensors
       for(int i = 0; i < 3;i++) {   //the digital pins to switch between the different sensor via the mulitplexer pcb 74HC4051
-         digitialWrite(pin, pin & (1 << i)?HIGH:LOW);    //Write the Values 1 or 0 --> Verunden von bzw 1(001) & S1(001) = 1 || 1(001) & S2(010) = 0
+         digitialWrite(selectedPin[i], (pin >> i & 1) ? HIGH : LOW);    //Write the Values 1 or 0 --> Verunden von bzw 1(001) & S1(001) = 1 || 1(001) & S2(010) = 0
       }
       flexValue[pin] = analogRead(flexPin)   //read the Value from the selected pin
       flexSensor = map(flexSensor,0,1023,0,100); //calculate the procentage
