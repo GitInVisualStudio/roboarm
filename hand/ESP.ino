@@ -72,6 +72,7 @@ void loop() {
   sent("Hello from the ESP"); //Send packet
   
   Serial.println("");
+  Delay(500);
 }
   
 //class for sending the data
