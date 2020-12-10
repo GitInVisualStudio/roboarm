@@ -31,7 +31,7 @@ def down():
 
 def run_window():
     WIDTH, HEIGHT = 720, 480
-    FPS = 10
+    FPS = 5
 
     window = Window(WIDTH, HEIGHT)
     window.open()
@@ -62,7 +62,9 @@ while True:
         content = str(content)
         if ";" in content:
             content = content[2:].split(';')
-            values = [float(v) for v in content]
-            print(values)
+            content = content.replace('"', '')
+            content = content.replace(char(39), '')
+            x, y, z, f1, f2, f3, f4, f5 = [float(v) for v in content]
+            arm.move_to_position()
 
 socket.close()
