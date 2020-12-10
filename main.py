@@ -69,6 +69,7 @@ while True:
                 arm.x = x;
                 arm.y = y;
                 arm.z = z;
+                print("X: " + str(x) + " Y: " + str(y) + " Z:" + str(z))
                 arm.move_to_position()
             except Exception:
                 print("error")
