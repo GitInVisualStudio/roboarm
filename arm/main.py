@@ -4,6 +4,8 @@ import threading
 import pygame
 import time
 import math
+import sys
+import socket
 import arm
 
 #sclae for the keyboard input
@@ -29,7 +31,7 @@ def down():
 
 def run_window():
     WIDTH, HEIGHT = 720, 480
-    FPS = 10
+    FPS = 15
 
     window = Window(WIDTH, HEIGHT)
     window.open()
@@ -40,7 +42,7 @@ def run_window():
 
     while running:
         window.update(arm.get_current_angles())
-        arm.move_to_position()
+        #arm.move_to_position()
         clock.tick(FPS)
 
 running = True
@@ -49,3 +51,32 @@ thread.start()
 
 #TODO: get the information from the esp and process it
 
+socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ('192.168.4.1', 1337)
+socket.connect(server_address)
+index = 0
+while True:
+    data = socket.recvfrom(1024)
+    if data:
+        content, _ = data
+        content = str(content)
+        if ";" in content:
+            try:
+                index += 1
+                if index < 5:
+                    continue
+                index = 0
+                content = content[1:].replace('"', '')
+                content = content.replace("'", '')
+                content = content.split(';')
+                x, y, z, f1, f2, f3, f4, f5 = [float(v) for v in content]
+                arm.x = x;
+                arm.y = y;
+                arm.z = z;
+                test = (f2 + f3 + f4 + f5)/400 * math.pi
+                arm.move_to_position()
+                arm.servos[3].move(test, math.pi/2)
+            except Exception as e:
+                print(e)
+
+socket.close()

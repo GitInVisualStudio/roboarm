@@ -4,8 +4,10 @@ import numpy as np
 import math
 
 #init the arm
-#alpha = 13, beta = 6, gamma = 22, delta = 5
-servos = [Servo(13), Servo(6), Servo(22), Servo(5)]
+#rotation 17
+#greifer 26
+#alpha = 27, beta = 22, gamma = 13, delta = 19
+servos = [Servo(27), Servo(22), Servo(13), Servo(26), Servo(17)]
 x, y, z = 0, 0, 0
 
 def close():
@@ -61,7 +63,7 @@ def move_to_position(position=None):
     #get the error of the target position, get the deriv of the loss func and adjust the angles
     # NOTE: the target is on 2d to simplify things
     length = math.sqrt(position[0]**2 + position[1]**2)
-    target = np.array([length, position[2]])
+    target = np.array([position[0], position[2]])
     
     for epoch in range(100):
         #yeah i know RMSprop is kind a overkill, but our limits of the joints are quit huge and thats why there are many minima
@@ -79,7 +81,9 @@ def move_to_position(position=None):
             move(*current_angles)
 
     #the last servo controls the rotation on the x-y and we dont need gradient descent to get the angle
-    current_angles[-1] = np.arctan2(position[1], position[0])
+    #current_angles[-1] = np.arctan2(position[1], position[0])
+    print(position[1])
+    current_angles[-1] = position[1]
     move(*current_angles)
 
 def get_current_angles():

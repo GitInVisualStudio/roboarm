@@ -12,20 +12,24 @@ class Servo:
         self.servo = GPIO.PWM(pin, 50)
         self.servo.start(0)
         self.angle = random.random()
+        self.prev = 0
 
     def move(self, angle, prev_servo):
         self.angle = angle
         angle = math.degrees(angle)
-        angle = angle + 90 - math.degrees(prev_servo)
+        angle = angle + 90.0 - math.degrees(prev_servo)
         if angle > 180:
-            self.angle = math.pi / 2 + prev_servo
-            angle = 180
+            self.angle = math.pi / 2. + prev_servo
+            angle = 180.0
         if angle < 0:
-            self.angle = prev_servo - math.pi / 2
+            self.angle = prev_servo - math.pi / 2.
             angle = 0
-        if self.pin == 6: #if you ask, the arm is bullshit
-            angle = 180 - angle
-        angle = angle / 18 + 2
+        if self.pin == 22: #if you ask, the arm is bullshit
+            angle = 180. - angle
+        if abs(self.prev - angle) < 5:
+            return
+        self.prev = angle
+        angle = angle / 18. + 2.
         self.servo.ChangeDutyCycle(angle)
 
     def close(self):

@@ -41,7 +41,7 @@ class Window:
 
         #TODO: render the arm
 
-        alpha, beta, gamma, delta = angles
+        alpha, beta, gamma, _, delta = angles
         #translation
         _x, _y = 200, 200
         length = 50
@@ -57,7 +57,7 @@ class Window:
         pygame.draw.line(self.screen, (0, 0, 255), (x2, y2), (x3, y3))
         
         #TODO: render the target position
-        x = _x + math.sqrt(arm.x**2 + arm.y**2) * length
+        x = _x + math.sqrt(arm.x**2) * length
         y = _y - arm.z * length #opposite direction
         pygame.draw.rect(self.screen, (0, 255, 255), (x, y, 5, 5))
 
