@@ -61,10 +61,16 @@ while True:
         content, _ = data
         content = str(content)
         if ";" in content:
-            content = content[2:].split(';')
-            content = content.replace('"', '')
-            content = content.replace(char(39), '')
-            x, y, z, f1, f2, f3, f4, f5 = [float(v) for v in content]
-            arm.move_to_position()
+            try:
+                content = content.replace('"', '')
+                content = content.replace(char(39), '')
+                content = content.split(';')
+                x, y, z, f1, f2, f3, f4, f5 = [float(v) for v in content]
+                arm.x = x;
+                arm.y = y;
+                arm.z = z;
+                arm.move_to_position()
+            except Exception:
+                print("error")
 
 socket.close()
