@@ -74,7 +74,7 @@ void loop() {
 
 void send_infomation(){
   char buf[1024];
-  sprintf(buf, "%f;%f;%f;%i;%i;%i;%i;%i", x, y, z, flexValue[0], flexValue[1], flexValue[2], flexValue[3], flexValue[4]);
+  sprintf(buf, "%f;%f;%f;%i;%i;%i;%i;%i,%f,%f", x, y, z, flexValue[0], flexValue[1], flexValue[2], flexValue[3], flexValue[4], pitch, roll);
   client.println(buf);
   client.flush();
   Serial.println("sending data..."); 
