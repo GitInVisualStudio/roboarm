@@ -68,6 +68,7 @@ while True:
             try:
                 content = content[1:].replace('"', '')
                 content = content.replace("'", '')
+                socket_unity.send(content, "utf-8")
                 content = content.split(';')
                 x, y, z, f1, f2, f3, f4, f5, pitch, roll = [float(v) for v in content]
                 arm.x = x;
@@ -76,7 +77,6 @@ while True:
                 test = (f2 + f3 + f4 + f5)/400 * math.pi
                 arm.move_to_position()
                 arm.servos[3].move(test, math.pi/2)
-                socket_unity.send(bytes(str(pitch) + ";" + str(roll), "utf-8")
             except Exception as e:
                 print(e)
 
