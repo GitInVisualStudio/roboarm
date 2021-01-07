@@ -51,10 +51,14 @@ thread.start()
 
 #TODO: get the information from the esp and process it
 
+socket_unity = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+unity_address = ('192.168.4.10', 1338)
+
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('192.168.4.1', 1337)
+
+socket_unity.connect(unity_address)
 socket.connect(server_address)
-index = 0
 while True:
     data = socket.recvfrom(1024)
     if data:
@@ -62,21 +66,19 @@ while True:
         content = str(content)
         if ";" in content:
             try:
-                index += 1
-                if index < 5:
-                    continue
-                index = 0
                 content = content[1:].replace('"', '')
                 content = content.replace("'", '')
                 content = content.split(';')
-                x, y, z, f1, f2, f3, f4, f5 = [float(v) for v in content]
+                x, y, z, f1, f2, f3, f4, f5, pitch, roll = [float(v) for v in content]
                 arm.x = x;
                 arm.y = y;
                 arm.z = z;
                 test = (f2 + f3 + f4 + f5)/400 * math.pi
                 arm.move_to_position()
                 arm.servos[3].move(test, math.pi/2)
+                socket_unity.send(bytes(str(pitch) + ";" + str(roll), "utf-8")
             except Exception as e:
                 print(e)
 
 socket.close()
+socket_unity.close()
